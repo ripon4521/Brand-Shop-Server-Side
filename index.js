@@ -36,6 +36,29 @@ async function run() {
 
     const bransCollection = client.db('bransdDB').collection("brand");
 
+    
+    app.get("/brands/:brandName" , async(req , res)=>{
+      const   brandName  = req.params.brandName;
+      const queary = {brandName:brandName}
+      console.log(queary);
+   
+      // console.log(brandName);
+      // const queary = {brandName : bransCollection(brandName)}
+      const items = await bransCollection.find(queary).toArray();
+      console.log(items);
+      res.send(items)
+    })
+
+    app.get("/brands" , async(req , res)=>{
+      const cursur = bransCollection.find();
+      const result = await cursur.toArray();
+      res.send(result)
+    })
+
+
+
+
+
 
     app.post("/brand", async(req , res)=> {
       const brand = req.body;
