@@ -34,9 +34,15 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
 
+    const bransCollection = client.db('bransdDB').collection("brand");
 
 
-
+    app.post("/brand", async(req , res)=> {
+      const brand = req.body;
+      const result = await bransCollection.insertOne(brand)  
+    // console.log(brand); 
+      res.send(result)
+  })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
