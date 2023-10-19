@@ -64,6 +64,12 @@ async function run() {
       res.send(result)
     })
 
+    app.get("/update" , async(req , res)=>{
+      const cursur = bransCollection.find();
+      const result = await cursur.toArray();
+      res.send(result)
+    })
+
 
 
     app.get("/products" , async(req , res)=>{
@@ -72,12 +78,34 @@ async function run() {
       res.send(result)
     })
 
-    app.get("/products/:id" , async(req , res)=>{
+
+    app.get("/update/:id" , async(req , res)=>{
       const   id  = req.params.id;
       const queary = {_id : new ObjectId(id)}
-      const result = await productCollection.findOne(queary);
+      const result = await bransCollection.findOne(queary);
       res.send(result)
     })
+
+    app.put("/update/:id" , async(req , res)=>{
+      const   id  = req.params.id;
+      const filter = {_id : new ObjectId(id)}
+      const option = {upsert: true}
+      const updateBrand = req.body;
+      const brand ={
+        $set:{
+          productName:updateBrand.productName,
+           brandName:updateBrand.brandName ,
+            typeName:updateBrand.typeName ,
+             rating:updateBrand.rating,
+             url:updateBrand.url,
+             price:updateBrand.price
+        }
+      }
+      const result = await bransCollection.updateOne(filter,brand,option);
+      res.send(result)
+    })
+
+    
 
     app.delete("/products/:id" , async(req , res)=>{
       const   id  = req.params.id;
