@@ -18,7 +18,7 @@ app.use(express.json())
 
 
 
-const { MongoClient, ServerApiVersion  } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId  } = require('mongodb');
 const uri = "mongodb+srv://riponakondo4521:NJzGOAF3FlfqNvqu@cluster0.xm8ksdz.mongodb.net/?retryWrites=true&w=majority";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -40,13 +40,20 @@ async function run() {
     app.get("/brands/:brandName" , async(req , res)=>{
       const   brandName  = req.params.brandName;
       const queary = {brandName:brandName}
-      console.log(queary);
-   
-      // console.log(brandName);
-      // const queary = {brandName : bransCollection(brandName)}
+      
       const items = await bransCollection.find(queary).toArray();
-      console.log(items);
+     
       res.send(items)
+    })
+    // Specific One Brand Get Dtata
+    app.get("/brand/:id" , async(req , res)=>{
+      const   id  = req.params.id;
+      console.log(id);
+      const queary = {_id : new ObjectId(id)}
+      console.log(queary);
+      const result = await bransCollection.findOne(queary );
+      // console.log(result);
+      res.send(result)
     })
 
     app.get("/brands" , async(req , res)=>{
