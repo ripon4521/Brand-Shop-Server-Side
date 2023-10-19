@@ -66,11 +66,9 @@ async function run() {
 
 
 
-    app.get("/products/:userData" , async(req , res)=>{
-      const   userData  = req.params.userData;
-      const queary = {userData:userData}
-      // const cursur = productCollection.find();
-      const result = await productCollection.find(queary).toArray();
+    app.get("/products" , async(req , res)=>{
+      const cursur = productCollection.find();
+      const result = await cursur.toArray();
       res.send(result)
     })
 
