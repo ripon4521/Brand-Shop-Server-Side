@@ -13,8 +13,7 @@ app.use(cors());
 app.use(express.json())
 
 
-// riponakondo4521
-// NJzGOAF3FlfqNvqu
+
 
 
 console.log(process.env.DB_USER);
@@ -40,7 +39,7 @@ async function run() {
     const productCollection = client.db('productDB').collection("product");
 
     
-    app.get("/brands/:brandName" , async(req , res)=>{
+    app.get("/brand/:brandName" , async(req , res)=>{
       const   brandName  = req.params.brandName;
       const queary = {brandName:brandName}
       
@@ -49,7 +48,7 @@ async function run() {
       res.send(items)
     })
     // Specific One Brand Get Dtata
-    app.get("/brand/:id" , async(req , res)=>{
+    app.get("/brands/:id" , async(req , res)=>{
       const   id  = req.params.id;
       console.log(id);
       const queary = {_id : new ObjectId(id)}
@@ -59,7 +58,7 @@ async function run() {
       res.send(result)
     })
 
-    app.get("/brands" , async(req , res)=>{
+    app.get("/brand" , async(req , res)=>{
       const cursur = bransCollection.find();
       const result = await cursur.toArray();
       res.send(result)
